@@ -1,0 +1,69 @@
+server:
+  port: 8088
+
+spring:
+    datasource:
+      url: jdbc:mysql://localhost:3306/metabus?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+      username: username
+      password: password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    messages:
+      basename: messages
+    security:
+      user:
+        name: user
+        password: 1234
+    jpa:
+      show-sql: true
+      hibernate:
+        ddl-auto: update #none, validate, create-drop, create, update
+      properties:
+        hibernate:
+          format_sql: true
+      database: mysql
+    servlet:
+      multipart:
+        max-file-size: 2200000KB
+        max-request-size: 2200000KB
+    mail:
+      host: smtp.gmail.com
+      port: 587
+      username: username
+      password: password
+      properties:
+        mail:
+          smtp:
+            starttls:
+              enable: true
+            ssl:
+              enable: false
+            auth: true
+
+
+#for server(Rest api) mornitoring tool
+logging:
+  level:
+    org.springframework: debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# JWT
+token:
+   app:
+     jwtSecret: 'DashboardJwtSecretDashboardJwtSecretDashboardJwtSecretDashboardJwtSecret'
+     jwtExpirationMs: '86400000'
+
+# File Upload
+app:
+  upload:
+    dir: '/home/seol/fileupload'
+
+# coolsms
+icns:
+  app:
+    coolsms:
+      apikey: 'NCSPWZTO6PE4LWWK'
+      apisecret: '39NVNV8NFYPC6AOYSKGCRCJP6VXWB0RW'
+      phone: '01000000000' # 대표전화번호
