@@ -71,7 +71,7 @@ public class QuizDaoService {
     }
 
     @Transactional
-    public List<QuizList> listByQuizId (Integer quizid){
+    public List<QuizList> infoByQuizId (Integer quizid){
         Optional<Quiz> ops = quizRepository.findById(quizid);
         List<QuizList> list = new ArrayList<>();
 

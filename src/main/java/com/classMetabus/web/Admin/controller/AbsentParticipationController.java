@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/participation")
 @AllArgsConstructor
-@Api(tags = {"수업 참여도, 출결"})
+@Api(tags = {"수업 참여도/출결"})
 public class AbsentParticipationController {
     private final ParticipationDaoService participationDaoService;
     @PostMapping("/post/joinLecture")
@@ -26,7 +26,6 @@ public class AbsentParticipationController {
         String message = "학생 리스트 아이디를 불러왔습니다.";
         return new ResponseEntity(CommonResponse.res(true, StatusCode.OK, message,participationDaoService.findByStudentListId(request)),null, HttpStatus.OK);
     }
-
     @PostMapping("/post/getabsentlecture")
     public ResponseEntity getAbsentLecture(@RequestBody GetAbsentLectureRequest request) {
         String message = "학생 출결 등록을 성공했습니다.";
@@ -34,7 +33,7 @@ public class AbsentParticipationController {
 
     }
     @PostMapping("/post/participationlevel")
-    public ResponseEntity update(@RequestBody GetParticipationLevelRequest request) {
+    public ResponseEntity updateById(@RequestBody GetParticipationLevelRequest request) {
         Boolean result = participationDaoService.updateParticipationLevel(request);
         String message =  "학생 참여도 등록을 실패했습니다.";
         if (result == true) {

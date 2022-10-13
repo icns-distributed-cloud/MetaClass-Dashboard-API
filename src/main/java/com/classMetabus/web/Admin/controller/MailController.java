@@ -22,9 +22,10 @@ public class MailController {
     public ResponseEntity sendMail(@RequestBody SendMailRequest request){
         return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "메일전송을 성공했습니다.",mailService.sendMail(request.getInstructorId(), request.getContext())), null, HttpStatus.OK);
     }
-
+    /*
+    // 미사용
     @GetMapping("/log")
     public ResponseEntity findLog(final Pageable pageable){
         return new ResponseEntity(CommonResponse.res(true,StatusCode.OK,"메일찾기를 성공했습니다.", mailService.findAll(pageable)),null, HttpStatus.OK);
-    }
+    }*/
 }

@@ -10,7 +10,6 @@ public interface AbsentClassInfoProjectionInterface {
     String getDepartment();
     Integer getParticipationLevel();
 
-    //Boolean absentYN();
     LocalDateTime getAbsentDateTime();
     Boolean getLateYN();
 }

@@ -44,6 +44,7 @@ public class LectureDaoService {
                 .deleted(false)
                 .map(map)
                 .instructor(instructor)
+                .color(request.getColor())
                 .build();
 
         if(!(request.getContentId()==null)){
@@ -108,6 +109,7 @@ public class LectureDaoService {
         updatedInfo.setInstructor(instructor);
         updatedInfo.setStartTime(request.getStartTime());
         updatedInfo.setEndTime(request.getEndTime());
+        updatedInfo.setColor(request.getColor());
 
         updatedInfo.setMap(map);
 
@@ -117,14 +119,14 @@ public class LectureDaoService {
                     .build();
             updatedInfo.setContent(content);
         }
-        else{ updatedInfo.setContent(null); }//임시
+        else{ updatedInfo.setContent(null); }
 
         if(request.getQuizId() != null){
             Quiz quiz = Quiz.builder().id(request.getQuizId()).build();
 
             updatedInfo.setQuiz(quiz);
         }
-        else{ updatedInfo.setQuiz(null); }//임시
+        else{ updatedInfo.setQuiz(null); }
         lectureRepository.save(updatedInfo);
         return true;
     }
@@ -169,7 +171,7 @@ public class LectureDaoService {
             response.setMapName(lectures.get(i).getMapName());
             response.setQuizId(lectures.get(i).getQuizId());
             response.setQuizName(lectures.get(i).getQuizName());
-            //response.setCountUser(lectures.get(i).getCountUser());
+            response.setColor(lectures.get(i).getColor());
 
             int j = 0;
             for(countOfStudentProjectionInterface count: cnts){
@@ -230,7 +232,6 @@ public class LectureDaoService {
                     student.setParticipationLevel(studentList.get(i).getParticipationLevel());
                     student.setAbsentYN(true);
                     student.setLateYN(studentList.get(i).getLateYN());
-
                 }
                 students.add(student);
                 i++;
@@ -270,6 +271,7 @@ public class LectureDaoService {
             response.setParticipationLevel(lectures.get(i).getParticipationLevel());
             response.setAbsentTime(lectures.get(i).getAbsentTime());
             response.setLateYN(Objects.isNull(lectures.get(i).getAbsentTime()));
+            response.setColor(lectures.get(i).getColor());
 
             if(cnts.isEmpty()){
                 response.setCountUser(0);
@@ -318,6 +320,7 @@ public class LectureDaoService {
             response.setMapType(lectures.get(i).getMapType());
             response.setMapName(lectures.get(i).getMapName());
             response.setCountUser(lectures.get(i).getCountUser());
+            response.setColor(lectures.get(i).getColor());
 
             int j = 0;
             for(countOfStudentProjectionInterface count: cnts){
@@ -351,12 +354,8 @@ public class LectureDaoService {
     }
     @Transactional
     public boolean joinLecture(StudentLectureRequest request){
-/*        Optional<Student> studentCheck = studentLoginRepository.findById(request.getStudentId());
-        Optional<Lecture> lectureCheck = lectureRepository.findById(request.getLectureId());*/
-        Optional<StudentList> info = studentListRepository.findIdByStudent_IdAndLecture_id(request.getStudentId(),request.getLectureId());
+       Optional<StudentList> info = studentListRepository.findIdByStudent_IdAndLecture_id(request.getStudentId(),request.getLectureId());
 
-/*        if(studentCheck.isEmpty() || lectureCheck.isEmpty() || info.isPresent())
-            return false;*/
         if(info.isPresent())
             return false;
 

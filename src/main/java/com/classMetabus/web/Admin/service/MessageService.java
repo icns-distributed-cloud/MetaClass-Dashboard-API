@@ -83,13 +83,13 @@ public class MessageService {
     }
 
     /*
+    //미사용
     @Transactional(readOnly = true)
     public Page<MessageLog> findAll(Pageable pageable){
         Page<MessageLog> messageLogList = messageLogRepository.findAll(pageable);
         return messageLogList;
     }
-    */
-/*    @Transactional(readOnly = true)
+   @Transactional(readOnly = true)
     public List<MessageLog> findAll(){
         List<MessageLog> messageLogList = messageLogRepository.findAll();
         return messageLogList;

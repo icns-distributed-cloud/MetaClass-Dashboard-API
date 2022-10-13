@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/map")
 @AllArgsConstructor
-@Api(tags = {"강의실 공간 맵 생성/삭제/리스트업"})
+@Api(tags = {"강의실 공간 맵 생성/삭제/조회"})
 public class MapController {
     private MapDaoService mapDaoService;
 

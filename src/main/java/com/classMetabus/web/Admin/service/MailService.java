@@ -69,10 +69,12 @@ public class MailService {
         return toUserList;
     }
 
+    /*
+    // 미사용
     @Transactional(readOnly = true)
     public Page<MailLog> findAll(Pageable pageable){
         Page<MailLog> mailLogList = mailLogRepository.findAll(pageable);
         return mailLogList;
-    }
+    }*/
 
 }

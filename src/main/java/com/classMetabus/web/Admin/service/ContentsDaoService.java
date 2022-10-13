@@ -36,11 +36,14 @@ public class ContentsDaoService {
         CreateContentResponse response = new CreateContentResponse();
         if(opt.isPresent())
             return response;
+        Instructor instructor = new Instructor();
+        instructor.setId(1);
 
         Content content = Content.builder()
                 .name(file.getOriginalFilename())
                 .deleted(false)
                 .directory(directory.replace(uploadDir,""))
+                .instructor(instructor)
                 .build();
         contentsRepository.save(content);
 
@@ -70,7 +73,7 @@ public class ContentsDaoService {
 
     @Transactional
     public List<ContentListResponse> contentList(ContentListRequest request) {
-       return contentsRepository.findByInstructor_IdAndDeletedEquals(request.getInstructorId(),false).stream().map(ContentListResponse::new).collect(Collectors.toList());
+        return contentsRepository.findByInstructor_IdAndDeletedEquals(request.getInstructorId(),false).stream().map(ContentListResponse::new).collect(Collectors.toList());
     }
     @Transactional
     public Boolean updateIdByContentId(UpdateIdByContentIdRequest request){

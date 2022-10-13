@@ -44,6 +44,9 @@ public class Lecture {
     @ColumnDefault(value = "0")
     private Boolean deleted;
 
+    @Column(nullable = false)
+    private String color;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "content_id")
     private Content content;

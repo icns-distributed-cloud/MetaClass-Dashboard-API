@@ -41,6 +41,6 @@ public class Content {
     private Boolean deleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "instructor_id", nullable = false)
+    @JoinColumn(name = "instructor_id", nullable = true)
     private Instructor instructor;
 }

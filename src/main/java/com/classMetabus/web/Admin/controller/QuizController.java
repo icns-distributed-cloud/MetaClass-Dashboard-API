@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/quiz")
 @AllArgsConstructor
-@Api(tags = {"퀴즈 등록, 삭제, 확인, 성적처리"})
+@Api(tags = {"퀴즈 등록/수정/삭제/확인/성적처리"})
 public class QuizController {
     private QuizDaoService quizDaoService;
 
@@ -43,9 +43,9 @@ public class QuizController {
     }
 
     @GetMapping("get/listbyquizid")
-    public ResponseEntity listByQuizId(@RequestParam Integer quizId) {
+    public ResponseEntity infoByQuizId(@RequestParam Integer quizId) {
         String message = "리스트를 성공적으로 가져왔습니다.";
-        return new ResponseEntity(CommonResponse.res(true, StatusCode.OK, message, quizDaoService.listByQuizId(quizId)), null, HttpStatus.OK);
+        return new ResponseEntity(CommonResponse.res(true, StatusCode.OK, message, quizDaoService.infoByQuizId(quizId)), null, HttpStatus.OK);
     }
 
     @PostMapping("/post/updatequiz")

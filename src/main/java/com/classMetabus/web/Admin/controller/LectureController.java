@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/lecture")
 @AllArgsConstructor
-@Api(tags = {"선생님,학생 강좌 생성/삭제/리스트업"})
+@Api(tags = {"강좌 생성/수정/삭제/조회, 수강 신청/리스트 조회"})
 public class LectureController {
     private LectureDaoService lectureDaoService;
 
     @PostMapping("/instructor/post/createlecture")
-    public ResponseEntity CreateLecture(@RequestBody CreateLectureRequest request){
+    public ResponseEntity createLecture(@RequestBody CreateLectureRequest request){
         Boolean result = lectureDaoService.create(request);
         String message = "강좌 생성을 실패했습니다.";
         if(result == true){
@@ -50,7 +50,7 @@ public class LectureController {
     }
 
     @PostMapping("/instructor/post/lecturelist")
-    public ResponseEntity LectureList(@RequestBody LectureListRequest request){
+    public ResponseEntity lectureList(@RequestBody LectureListRequest request){
         String message = "강좌 리스트를 성공적으로 가져왔습니다.";
         return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, message,lectureDaoService.listByInstructorNDate(request)),null, HttpStatus.OK);
     }

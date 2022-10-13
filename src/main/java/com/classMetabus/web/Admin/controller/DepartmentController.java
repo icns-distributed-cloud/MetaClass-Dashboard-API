@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/department")
 @AllArgsConstructor
-@Api(tags = {"부서 생성/삭제/리스트업"})
+@Api(tags = {"부서 생성/삭제/리스트"})
 public class DepartmentController {
     private final DepartmentDaoService departmentDaoService;
     @PostMapping("/post/postdepartment")

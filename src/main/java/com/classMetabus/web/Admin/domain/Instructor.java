@@ -21,7 +21,6 @@ public class Instructor{
     @Column(name = "id")
     private Integer id;
 
-
     @Column(unique = true,nullable = false)
     private String loginId;
 
@@ -49,6 +48,10 @@ public class Instructor{
     @Column
     @ColumnDefault(value = "0")
     private boolean deleted; // 0: active 1:deleted
+
+    @Column
+    @ColumnDefault(value = "0")
+    private Integer status; //0:need to change pw 1:재직 2:휴직 3:퇴직
 
     public boolean getDeleted() {
         return deleted;

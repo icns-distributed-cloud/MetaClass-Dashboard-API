@@ -16,9 +16,6 @@ public class Server {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-/*    @Column
-    @ColumnDefault(value = "0")
-    private boolean deleted;*/
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
@@ -28,7 +25,4 @@ public class Server {
     @JoinColumn(name = "ip_id")
     private IP ip;
 
-/*    public boolean getDeleted() {
-        return deleted;
-    }*/
 }

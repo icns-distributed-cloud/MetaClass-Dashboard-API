@@ -33,12 +33,12 @@ public class UserDaoService {
             });
 
             Instructor instructor = Instructor.builder()
-                            .loginId(request.getLoginId())
-                            .name(request.getName())
-                            .email(request.getEmail())
-                            .password(request.getPassword())
-                            .phone(request.getPhone().replace("-","").replace(".",""))
-                            .build();
+                    .loginId(request.getLoginId())
+                    .name(request.getName())
+                    .email(request.getEmail())
+                    .password(request.getPassword())
+                    .phone(request.getPhone().replace("-","").replace(".",""))
+                    .build();
             instructorLoginRepository.save(instructor);
             return true;
         }
@@ -68,42 +68,38 @@ public class UserDaoService {
     @Transactional
     public LoginResponse findOne(LoginRequest request){
         LoginResponse response = new LoginResponse();
-        if(request.getUserMode().equals(0)){
-            Optional<Instructor> ins = instructorLoginRepository.findByLoginId(request.getLoginId());
-            if(ins.isEmpty() || ins.get().getDeleted() == true)
-                return response;
-            if (ins.get().getPassword().equals(request.getPassword())){
-                response.setId(ins.get().getId());
-                response.setName(ins.get().getName());
-                response.setLoginId(ins.get().getLoginId());
-                response.setEmail(ins.get().getEmail());
-                response.setPhone(ins.get().getPhone());
-                return response;
-            }
+        Optional<Instructor> ins = instructorLoginRepository.findByLoginId(request.getLoginId());
+        Optional<Student> stu = studentLoginRepository.findByLoginId(request.getLoginId());
+        Optional<Admin> admin = adminRepository.findByLoginIdAndDeletedEquals(request.getLoginId(),false);
+        if(ins.isPresent() && ins.get().getDeleted() != true &&
+                ins.get().getPassword().equals(request.getPassword())){
+            response.setId(ins.get().getId());
+            response.setName(ins.get().getName());
+            response.setLoginId(ins.get().getLoginId());
+            response.setEmail(ins.get().getEmail());
+            response.setPhone(ins.get().getPhone());
+            response.setUserMode(0);
+            response.setStatus(ins.get().getStatus());
+            return response;
         }
-        else if(request.getUserMode().equals(1)) {
-            Optional<Student> stu = studentLoginRepository.findByLoginId(request.getLoginId());
-            if(stu.isEmpty() || stu.get().getDeleted() == true )
-                return response;
-            else if (stu.get().getPassword().equals(request.getPassword())){
-                response.setId(stu.get().getId());
-                response.setName(stu.get().getName());
-                response.setLoginId(stu.get().getLoginId());
-                response.setEmail(stu.get().getEmail());
-                response.setPhone(stu.get().getPhone());
-                response.setDepartmentName(stu.get().getDepartment().getName());
-                return response;
-            }
+        else if(stu.isPresent() && stu.get().getDeleted() != true &&
+                stu.get().getPassword().equals(request.getPassword())){
+            response.setId(stu.get().getId());
+            response.setName(stu.get().getName());
+            response.setLoginId(stu.get().getLoginId());
+            response.setEmail(stu.get().getEmail());
+            response.setPhone(stu.get().getPhone());
+            response.setDepartmentName(stu.get().getDepartment().getName());
+            response.setUserMode(1);
+            response.setStatus(stu.get().getStatus());
+            return response;
         }
-        else if(request.getUserMode().equals(2)){
-            Optional<Admin> admin = adminRepository.findByLoginIdAndDeletedEquals(request.getLoginId(),false);
-            if(admin.isEmpty())
-                return response;
-            if (admin.get().getPassword().equals(request.getPassword())){
-                response.setId(admin.get().getId());
-                response.setName(admin.get().getName());
-                return response;
-            }
+        else if (admin.isPresent() && admin.get().getPassword().equals(request.getPassword())){
+            response.setId(admin.get().getId());
+            response.setName(admin.get().getName());
+            response.setUserMode(2);
+            response.setStatus(admin.get().getStatus());
+            return response;
         }
         return response;
     }
@@ -113,21 +109,20 @@ public class UserDaoService {
     }
     @Transactional
     public boolean updateById(UpdateRequest request){
-        if(request.getUserMode().equals(0)){
-            Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
-            if(ins.isEmpty() || ins.get().getDeleted()) return false;
+        Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
+        Optional<Student> stu = studentLoginRepository.findById(request.getId());
+        if(ins.isPresent() && ins.get().getDeleted() != true){
             Instructor instructor = ins.get();
             instructor.setName(request.getName());
             instructor.setEmail(request.getEmail());
             instructor.setPhone(request.getPhone());
             instructor.setPassword(request.getPassword());
+            instructor.setStatus(1);
 
             instructorLoginRepository.save(instructor);
             return true;
         }
-        else if(request.getUserMode().equals(1)){
-            Optional<Student> stu = studentLoginRepository.findById(request.getId());
-            if(stu.isEmpty() || stu.get().getDeleted()) return false;
+        else if(stu.isPresent() && stu.get().getDeleted() != true){
             Department department = Department.builder().id(request.getDepartmentId()).build();
             Student student = stu.get();
             student.setName(request.getName());
@@ -139,7 +134,9 @@ public class UserDaoService {
             studentLoginRepository.save(student);
             return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
     @Transactional
     public boolean deleteById(DeleteRequest deleteRequest){

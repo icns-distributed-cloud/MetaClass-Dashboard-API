@@ -1,7 +1,6 @@
 package com.classMetabus.web.Admin.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,7 +21,6 @@ public class Student{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
 
     @Column(unique = true,nullable = false)
     private String loginId;
@@ -51,6 +49,10 @@ public class Student{
     @Column
     @ColumnDefault(value = "0")
     private boolean deleted; // 0: active 1:deleted
+
+    @Column
+    @ColumnDefault(value = "0")
+    private Integer status; //0:need to change pw 1:재직 2:휴직 3:퇴직
 
     public boolean getDeleted() {
         return deleted;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/ip")
 @AllArgsConstructor
-@Api(tags = {"서버 아이피 등록, 삭제, 확인"})
+@Api(tags = {"서버 아이피 등록/삭제/조회"})
 public class IpController {
     private final IpDaoService ipDaoService;
 

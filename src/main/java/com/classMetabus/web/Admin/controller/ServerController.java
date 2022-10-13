@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/server")
 @AllArgsConstructor
-@Api(tags = {"강의실 서버 등록, 삭제, 확인"})
+@Api(tags = {"서버 등록/삭제/조회"})
 public class ServerController {
     private final ServerDaoService serverDaoService;
 
@@ -26,10 +26,11 @@ public class ServerController {
     }
 
     @PostMapping("/post/listserver")
-    public ResponseEntity ServerList(@RequestBody ServerIPListRequest request) {
+    public ResponseEntity serverList(@RequestBody ServerIPListRequest request) {
         String message = "서버 리스트를 불러왔습니다.";
         return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, message,serverDaoService.ServerIPList(request)),null, HttpStatus.OK);
     }
+
     @DeleteMapping("/delete/deleteserver")
     public ResponseEntity deleteById(@RequestBody DeleteServerIPRequest request){
         Boolean result = serverDaoService.deleteById(request);

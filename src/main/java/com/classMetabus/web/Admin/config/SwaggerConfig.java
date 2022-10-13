@@ -18,7 +18,7 @@ import java.util.Set;
 @EnableSwagger2
 public class SwaggerConfig {
     private static final Contact DEFAULT_CONTACT =
-            new Contact("Seol Roh","http://www.icnslab.net/#/home","seven800@khu.ac.kr");
+            new Contact("ICNS Lab","http://www.icnslab.net/#/home","ICNS@khu.ac.kr");
     private  static final ApiInfo DEFAULT_API_INFO = new ApiInfo("Metabus Dashboard API page",
             "My User management REST API service", "1.0","urn:tos",
             DEFAULT_CONTACT,"Apache 2.0",

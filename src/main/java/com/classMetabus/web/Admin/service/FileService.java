@@ -36,8 +36,7 @@ public class FileService {
             return target.toString();
             }catch (IOException e){
             e.printStackTrace();
-            //throw new FileStorageException("Could not store file : " + multipartFile.getOriginalFilename());
-        }
+            }
         return "";
     }
 

@@ -58,6 +58,10 @@ public class MapDaoService {
     }
 
     @Transactional
+    public List<MapListResponse> ListByInstructor(MapListRequest request){
+        return mapRepository.findByInstructorIdAndDeletedEqualsOrderByCreatedTime(request.getInstructorId(),false).stream().map(MapListResponse::new).collect(Collectors.toList());
+    }
+    @Transactional
     public Boolean updateById(UpdateMapRequest request){
         Optional<Map> map = mapRepository.findById(request.getId());
         Optional<Map> find4name = mapRepository.findByNameAndIdIsNot(request.getName(),request.getId());
@@ -73,10 +77,5 @@ public class MapDaoService {
         updatedMap.setName(request.getName());
         mapRepository.save(updatedMap);
         return true;
-    }
-
-    @Transactional
-    public List<MapListResponse> ListByInstructor(MapListRequest request){
-        return mapRepository.findByInstructorIdAndDeletedEqualsOrderByCreatedTime(request.getInstructorId(),false).stream().map(MapListResponse::new).collect(Collectors.toList());
     }
 }

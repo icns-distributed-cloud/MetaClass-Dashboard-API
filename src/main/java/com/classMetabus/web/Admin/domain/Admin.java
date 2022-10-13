@@ -32,6 +32,9 @@ public class Admin {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    private String phone;
+
     @Column(nullable = true)
     @CreationTimestamp
     private LocalDateTime joinDate;
@@ -42,4 +45,8 @@ public class Admin {
     @Column
     @ColumnDefault(value = "0")
     private boolean deleted;
+
+    @Column
+    @ColumnDefault(value = "0")
+    private Integer status; //0:need to change pw 1:재직 2:휴직 3:퇴직
 }

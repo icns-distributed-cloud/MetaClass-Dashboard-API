@@ -43,7 +43,6 @@ public class IpDaoService {
     public boolean deleteById(Integer id){
         LocalDateTime Time = LocalDateTime.now();
         Optional<Server> server = serverRepository.findByIp_IdAndIp_DeletedEquals(id,false);
-        //if(!(server.isPresent() || server.get().getLecture().getEndTime().isAfter(Time) == true)){
         if(server.isEmpty()
                 || (server.get().getLecture().getEndTime().isBefore(Time) == true)){
             Optional<IP> ip = ipRepository.findById(id);
