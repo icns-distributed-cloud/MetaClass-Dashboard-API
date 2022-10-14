@@ -7,12 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class UpdateRequest {
+public class ChangePasswordRequest {
     private Integer id;
     private String password;
-    private String name;
-    private String phone;
-    private String email;
-    private Integer departmentId;
-    private Integer status;
+    private Integer userMode;
 }

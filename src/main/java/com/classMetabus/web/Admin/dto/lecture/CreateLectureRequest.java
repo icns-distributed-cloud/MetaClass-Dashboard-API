@@ -18,7 +18,6 @@ public class CreateLectureRequest {
     private Integer mapId;
     private Integer contentId;
     private Integer quizId;
-    private String color;
     private List<StudentIdList> stulist;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")

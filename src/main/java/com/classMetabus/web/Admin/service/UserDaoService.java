@@ -117,7 +117,7 @@ public class UserDaoService {
             instructor.setEmail(request.getEmail());
             instructor.setPhone(request.getPhone());
             instructor.setPassword(request.getPassword());
-            instructor.setStatus(1);
+            instructor.setStatus(request.getStatus());
 
             instructorLoginRepository.save(instructor);
             return true;
@@ -130,6 +130,7 @@ public class UserDaoService {
             student.setPhone(request.getPhone());
             student.setPassword(request.getPassword());
             student.setDepartment(department);
+            student.setStatus(request.getStatus());
 
             studentLoginRepository.save(student);
             return true;
@@ -181,6 +182,28 @@ public class UserDaoService {
         else if (studentLoginRepository.findByLoginId(request.getLoginId()).isPresent()){
             return false;
         }
+        return true;
+    }
+    @Transactional
+    public boolean changePassword (ChangePasswordRequest request) {
+        if (request.getUserMode().equals(0)) { //instructor
+            Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
+
+            Instructor instructor = ins.get();
+            instructor.setPassword(request.getPassword());
+            instructor.setStatus(1);
+            instructorLoginRepository.save(instructor);
+
+        } else if (request.getUserMode().equals(1)) { //student
+            Optional<Student> stu = studentLoginRepository.findById(request.getId());
+
+            Student student = stu.get();
+            student.setPassword(request.getPassword());
+            student.setStatus(1);
+            studentLoginRepository.save(student);
+        }
+        else {return false;}
+
         return true;
     }
 }

@@ -85,4 +85,11 @@ public class UserController {
         if (result == true) message =  "사용할 수 있는 아이디입니다.";
         return new ResponseEntity(CommonResponse.res(result, StatusCode.OK, message,null),null, HttpStatus.OK);
     }
+    @PostMapping("post/changePassword")
+    public ResponseEntity changePassword (@RequestBody ChangePasswordRequest request){
+        Boolean result = userDaoService.changePassword(request);
+        String message =  "존재하지 않은 아이디입니다.";
+        if (result == true) message = "비밀번호 변경을 성공했습니다.";
+        return  new ResponseEntity(CommonResponse.res(result,StatusCode.OK,message,null),null,HttpStatus.OK);
+    }
 }

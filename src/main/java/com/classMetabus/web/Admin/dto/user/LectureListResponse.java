@@ -32,7 +32,6 @@ public class LectureListResponse {
     private String mapName;
     private Integer quizId;
     private String quizName;
-    private String color;
     private List<Students> students;
 }
 
