@@ -18,7 +18,7 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping("/send")
-    public ResponseEntity sendMessage(@RequestBody SendMailRequest request){
+    public ResponseEntity sendMessage(@RequestBody SendMessageRequest request){
         return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "메세지를 전송했습니다.",messageService.sendMessage(request)),null, HttpStatus.OK);
     }
 

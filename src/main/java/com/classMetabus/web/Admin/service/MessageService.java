@@ -37,7 +37,7 @@ public class MessageService {
     @Value("${icns.app.coolsms.phone}")
     private String phone;
 
-    public Boolean sendMessage(SendMailRequest request){
+    public Boolean sendMessage(SendMessageRequest request){
         Optional<StudentList> stuList = studentListRepository.findIdByStudent_IdAndLecture_id(request.getStudentId(), request.getLectureId());
 
         if (stuList.isPresent()){
