@@ -2,7 +2,10 @@ package com.classMetabus.web.Admin.service;
 
 import com.classMetabus.web.Admin.domain.MessageLog;
 import com.classMetabus.web.Admin.domain.Student;
+import com.classMetabus.web.Admin.domain.StudentList;
+import com.classMetabus.web.Admin.dto.mail.SendMailRequest;
 import com.classMetabus.web.Admin.repository.MessageLogRepository;
+import com.classMetabus.web.Admin.repository.StudentListRepository;
 import com.classMetabus.web.Admin.repository.StudentLoginRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -15,12 +18,14 @@ import net.nurigo.java_sdk.api.Message;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MessageService {
 
     private final StudentLoginRepository studentLoginRepository;
+    private final StudentListRepository studentListRepository;
     private final MessageLogRepository messageLogRepository;
 
     @Value("${icns.app.coolsms.apikey}")
@@ -32,7 +37,34 @@ public class MessageService {
     @Value("${icns.app.coolsms.phone}")
     private String phone;
 
-    public List<String> sendMessage(String name, String context){
+    public Boolean sendMessage(SendMailRequest request){
+        Optional<StudentList> stuList = studentListRepository.findIdByStudent_IdAndLecture_id(request.getStudentId(), request.getLectureId());
+
+        if (stuList.isPresent()){
+            String toPhone = stuList.get().getStudent().getPhone();
+            String studentName = stuList.get().getStudent().getName();
+            String lectureName = stuList.get().getLecture().getName();
+            Message coolsms = new Message(apiKey, apiSecret);
+
+            HashMap<String,String> params = new HashMap<String,String>();
+            params.put("to",toPhone);
+            params.put("from",phone); // 사전에 사이트에서 번호를 인증하고 등록해야함
+            params.put("type","SMS");
+            params.put("text",studentName+"님 '"+lectureName+"' 과목의 수강신청이 완료 되었습니다."); // 메세지 내용
+            //params.put("app_version","test app1.2");
+            
+            System.out.println("전송완료");
+//            try{
+//                JSONObject obj = (JSONObject) coolsms.send(params);
+//                System.out.println(obj.toString()); // 전송 결과 출력
+//            }catch (CoolsmsException e){
+//                System.out.println(e.getMessage());
+//                System.out.println(e.getCode());
+//            }
+            return true;
+        }else {return false;}
+    }
+    /*public List<String> sendMessage(String name, String context){
         List<Student> studentList = studentLoginRepository.findAll();
         List<String> phoneList = new ArrayList<>();
 
@@ -80,7 +112,7 @@ public class MessageService {
 
 
         return phoneList;
-    }
+    }*/
 
     /*
     //미사용

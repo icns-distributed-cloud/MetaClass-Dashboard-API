@@ -19,7 +19,7 @@ public class MessageController {
 
     @PostMapping("/send")
     public ResponseEntity sendMessage(@RequestBody SendMailRequest request){
-        return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "메세지를 전송했습니다.",messageService.sendMessage("관리자", request.getContext())),null, HttpStatus.OK);
+        return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "메세지를 전송했습니다.",messageService.sendMessage(request)),null, HttpStatus.OK);
     }
 
     /*
