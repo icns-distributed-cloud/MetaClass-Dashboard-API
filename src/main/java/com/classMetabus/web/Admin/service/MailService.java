@@ -65,7 +65,7 @@ public class MailService {
         }
         return toUserList;
     }
-    public Optional<Student> sendMailLectureSignUpSuccess(Integer studentId, Integer lectureId) {
+    public boolean sendMailLectureSignUpSuccess(Integer studentId, Integer lectureId) {
         Optional<Student> signUpStudent = studentLoginRepository.findById(studentId);
         Optional<StudentList> stuList = studentListRepository.findIdByStudent_IdAndLecture_id(studentId, lectureId);
 
@@ -75,11 +75,13 @@ public class MailService {
             lectureSignUpMailMessage.setSubject("[수강신청]  "+ stuList.get().getLecture().getId() + "  수강 신청 성공 메일");
             lectureSignUpMailMessage.setText(stuList.get().getLecture().getStartTime() +"  " + stuList.get().getLecture().getName() + "  수업 수강 신청에 성공하였습니다.");
             javaMailSender.send(lectureSignUpMailMessage);
+            return true;
+
+        } else{
+            return false;
+        }
 
 
-        } // 수강신청 실패시
-
-        return signUpStudent;
 
         // 메일 로그 만들어야함
     }
