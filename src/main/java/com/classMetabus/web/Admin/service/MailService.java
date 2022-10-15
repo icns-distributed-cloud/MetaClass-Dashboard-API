@@ -70,11 +70,10 @@ public class MailService {
         Optional<StudentList> stuList = studentListRepository.findIdByStudent_IdAndLecture_id(studentId, lectureId);
 
         if (stuList.isPresent()) {
-            Optional<Lecture> lecture = lectureRepository.findById(lectureId);
             SimpleMailMessage lectureSignUpMailMessage = new SimpleMailMessage();
             lectureSignUpMailMessage.setTo(stuList.get().getStudent().getEmail());
-            lectureSignUpMailMessage.setSubject("[수강신청]"+ lecture.get().getName() + " 수강 신청 성공 메일");
-            lectureSignUpMailMessage.setText(lecture.get().getStartTime()+"시" +lecture.get().getName() + "수업 수강 신청에 성공하였습니다.");
+            lectureSignUpMailMessage.setSubject("[수강신청]  "+ stuList.get().getLecture().getId() + "  수강 신청 성공 메일");
+            lectureSignUpMailMessage.setText(stuList.get().getLecture().getStartTime() +"  " + stuList.get().getLecture().getName() + "  수업 수강 신청에 성공하였습니다.");
             javaMailSender.send(lectureSignUpMailMessage);
 
 
