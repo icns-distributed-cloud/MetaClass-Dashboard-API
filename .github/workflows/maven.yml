@@ -23,7 +23,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: build-artifact
-        path: build
+        path: target
         retention-days: 1
   docker:
     name: Deploy Docker Image
