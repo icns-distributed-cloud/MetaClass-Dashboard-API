@@ -8,4 +8,4 @@ WORKDIR $APP_HOME
 
 EXPOSE 8088
 
-CMD ["java", "-jar", "Admin-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/Admin-0.0.1-SNAPSHOT.jar"]
