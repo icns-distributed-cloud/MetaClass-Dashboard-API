@@ -21,27 +21,48 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: SSH Remote Commands
-      uses: appleboy/ssh-action@v0.1.4        
+      
+  docker:
+    name: Deploy Docker Image
+    runs-on: ubuntu-latest
+    needs: build
+    env:
+      REPO: ${{ secrets.DOCKER_REPO }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Retrieve built
+      uses: actions/download-artifact@v2
       with:
-        host: ${{ secrets.HOST }}          
-        username: ${{ secrets.USER }}
-        password: ${{ secrets.PW }}
-        port: ${{ secrets.PORT }}
-        timeout: 40s  # 30초 기본        
-        script: |
+        name: build-artifact
+        path: build
+    - name: Docker Hub Sign-in
+      # ${{secrets.DOCKER_USERNAME}}와 ${{ secrets.DOCKER_PASSWORD}}는 해당 Repository의 Secrets에 추가 해줌
+      run: docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PW }}
+    - name: Building Docker Image
+      run: docker build -t $REPO:latest -t $REPO:${GITHUB_RUN_ID} .
+    - name: Publish Docker Image
+      run: docker push $REPO
+#     - name: SSH Remote Commands
+#       uses: appleboy/ssh-action@v0.1.4        
+#       with:
+#         host: ${{ secrets.HOST }}          
+#         username: ${{ secrets.USER }}
+#         password: ${{ secrets.PW }}
+#         port: ${{ secrets.PORT }}
+#         timeout: 40s  # 30초 기본        
+#         script: |
 
-          echo "Login Start . . ."
-          docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PW }}
+#           echo "Login Start . . ."
+#           docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PW }}
 
-          echo "Image Download . . ."
-          docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.NAME }}
+#           echo "Image Download . . ."
+#           docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.NAME }}
 
-          echo "Container Stop . . ."
-          docker stop ${{ secrets.NAME }} 
+#           echo "Container Stop . . ."
+#           docker stop ${{ secrets.NAME }} 
 
-          echo "Container Remove . . ."
-          docker rm ${{ secrets.NAME }}
+#           echo "Container Remove . . ."
+#           docker rm ${{ secrets.NAME }}
 
-          echo "Container Start . . ."
-          docker run -d -p 8000:8000 --name ${{ secrets.NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.NAME }}
+#           echo "Container Start . . ."
+#           docker run -d -p 8000:8000 --name ${{ secrets.NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.NAME }}
