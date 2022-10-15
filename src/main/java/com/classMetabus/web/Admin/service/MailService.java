@@ -1,12 +1,8 @@
 package com.classMetabus.web.Admin.service;
 
 
-import com.classMetabus.web.Admin.domain.Instructor;
-import com.classMetabus.web.Admin.domain.MailLog;
-import com.classMetabus.web.Admin.domain.Student;
-import com.classMetabus.web.Admin.repository.InstructorLoginRepository;
-import com.classMetabus.web.Admin.repository.MailLogRepository;
-import com.classMetabus.web.Admin.repository.StudentLoginRepository;
+import com.classMetabus.web.Admin.domain.*;
+import com.classMetabus.web.Admin.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,10 +22,11 @@ public class MailService {
     private final StudentLoginRepository studentLoginRepository;
     private final InstructorLoginRepository instructorLoginRepository;
     private final MailLogRepository mailLogRepository;
-
+    private final LectureRepository lectureRepository;
+    private final StudentListRepository studentListRepository;
     private final JavaMailSender javaMailSender;
 
-    public List<String> sendMail(Integer instructorId, String context){
+    public List<String> sendMailAll(Integer instructorId, String context){
         List<Student> studentList = studentLoginRepository.findAll();
         Optional<Instructor> instructor = instructorLoginRepository.findById(instructorId);
 
@@ -67,6 +64,26 @@ public class MailService {
 
         }
         return toUserList;
+    }
+    public boolean sendMailLectureSignUpSuccess(Integer studentId, Integer lectureId) {
+        Optional<Student> signUpStudent = studentLoginRepository.findById(studentId);
+        Optional<StudentList> stuList = studentListRepository.findIdByStudent_IdAndLecture_id(studentId, lectureId);
+
+        if (stuList.isPresent()) {
+            SimpleMailMessage lectureSignUpMailMessage = new SimpleMailMessage();
+            lectureSignUpMailMessage.setTo(stuList.get().getStudent().getEmail());
+            lectureSignUpMailMessage.setSubject("[수강신청]  "+ stuList.get().getLecture().getId() + "  수강 신청 성공 메일");
+            lectureSignUpMailMessage.setText(stuList.get().getLecture().getStartTime() +"  " + stuList.get().getLecture().getName() + "  수업 수강 신청에 성공하였습니다.");
+            javaMailSender.send(lectureSignUpMailMessage);
+            return true;
+
+        } else{
+            return false;
+        }
+
+
+
+        // 메일 로그 만들어야함
     }
 
     /*

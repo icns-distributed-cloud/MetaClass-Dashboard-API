@@ -18,10 +18,16 @@ import org.springframework.web.bind.annotation.*;
 public class MailController {
     private final MailService mailService;
 
-    @PostMapping("/send")
-    public ResponseEntity sendMail(@RequestBody SendMailRequest request){
-        return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "메일전송을 성공했습니다.",mailService.sendMail(request.getInstructorId(), request.getContext())), null, HttpStatus.OK);
+    @PostMapping("/sendALL")
+    public ResponseEntity sendMailAll(@RequestBody SendMailRequest request){
+        return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "메일전송을 성공했습니다.",mailService.sendMailAll(request.getInstructorId(), request.getContext())), null, HttpStatus.OK);
     }
+
+    @PostMapping("/sendLectureSignUpSuccess")
+    public ResponseEntity sendMailLectureSignUpSuccess(@RequestBody SendMailRequest request){
+        return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "수강신청 성공 메일전송을 성공했습니다.",mailService.sendMailLectureSignUpSuccess(request.getStudentId(), request.getLectureId())), null, HttpStatus.OK);
+    }
+    /*
     /*
     // 미사용
     @GetMapping("/log")
