@@ -4,8 +4,8 @@ ENV APP_HOME=/usr/app/
 
 WORKDIR $APP_HOME
 
-COPY target/*.jar application.jar
+COPY target/Admin-0.0.1-SNAPSHOT.jar application.jar
 
-EXPOSE 8080
+EXPOSE 8088
 
 CMD ["java", "-jar", "application.jar"]
