@@ -8,6 +8,7 @@ on:
     branches: [ main ]
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -46,20 +47,19 @@ jobs:
     - name: Building Docker Image
       run: docker build -t $REPO:latest -t $REPO:${GITHUB_RUN_ID} .
     - name: Publish Docker Image
-      run: docker push $REPO
+      run: docker push $REPO    
 
-  job:
-    - name: SSH Remote Commands
-      runs-on: ubuntu-latest
-      uses: appleboy/ssh-action@master
-      needs: docker
-      steps:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        password: ${{ secrets.PW }}
-        port: ${{ secrets.PORT }}
-        script: |
-             docker rm -f $(docker ps -qa)
-             docker rmi ${{ secrets.DOCKER_REPO }}
-             docker run -d -p 8088:8088 ${{ secrets.DOCKER_REPO }}     
+    - name: SSh Remote Commands
+      uses: appleboy/ssh-action@v0.1.4
+      with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PW }}
+          port: ${{ secrets.PORT }}
+          script: |
+               docker rm -f $(docker ps -qa)
+               docker rmi ${{ secrets.DOCKER_REPO }}
+               docker run -d -p 8088:8088 ${{ secrets.DOCKER_REPO }}  
+
+   
 
