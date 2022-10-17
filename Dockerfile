@@ -6,7 +6,7 @@ FROM openjdk:17-jdk
 
 # COPY target/Admin-0.0.1-SNAPSHOT.jar application.jar
 
-ADD Admin-0.0.1-SNAPSHOT.jar Admin-0.0.1-SNAPSHOT.jar
+ADD target/Admin-0.0.1-SNAPSHOT.jar Admin-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8088
 
