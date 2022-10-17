@@ -25,7 +25,6 @@ target/test-classes
 *.iws
 *.iml
 *.ipr
-*.yml
 
 ### NetBeans ###
 /nbproject/private/
