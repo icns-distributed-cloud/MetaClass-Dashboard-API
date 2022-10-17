@@ -1,11 +1,14 @@
 FROM openjdk:17-jdk
 
-ENV APP_HOME=/usr/app/
-
-WORKDIR $APP_HOME
+#ENV APP_HOME=/usr/app/
+#
+#WORKDIR $APP_HOME
 
 # COPY target/Admin-0.0.1-SNAPSHOT.jar application.jar
 
+ADD build/Admin-0.0.1-SNAPSHOT.jar Admin-0.0.1-SNAPSHOT.jar
+
 EXPOSE 8088
 
-# CMD ["java", "-jar", "target/Admin-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "Admin-0.0.1-SNAPSHOT.jar"]
+#CMD ["java", "-jar", "Admin-0.0.1-SNAPSHOT.jar"]
