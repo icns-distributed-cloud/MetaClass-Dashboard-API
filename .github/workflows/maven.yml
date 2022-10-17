@@ -54,10 +54,10 @@ jobs:
       with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
-          password: ${{ secrets.PW }}
+#          password: ${{ secrets.PW }}
 #           passphrase: ${{ secrets.PRIVATE_KEY }}
           key: ${{ secrets.PRIVATE_KEY }}
-#           port: ${{ secrets.PORT }}
+          port: ${{ secrets.PORT }}
           script: |
                docker rm -f $(docker ps -qa)
                docker rmi ${{ secrets.DOCKER_REPO }}
