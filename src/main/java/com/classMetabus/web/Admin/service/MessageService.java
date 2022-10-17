@@ -4,6 +4,7 @@ import com.classMetabus.web.Admin.domain.MessageLog;
 import com.classMetabus.web.Admin.domain.Student;
 import com.classMetabus.web.Admin.domain.StudentList;
 import com.classMetabus.web.Admin.dto.mail.SendMailRequest;
+import com.classMetabus.web.Admin.dto.message.SendMessageRequest;
 import com.classMetabus.web.Admin.repository.MessageLogRepository;
 import com.classMetabus.web.Admin.repository.StudentListRepository;
 import com.classMetabus.web.Admin.repository.StudentLoginRepository;

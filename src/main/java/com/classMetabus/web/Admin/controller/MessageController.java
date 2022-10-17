@@ -3,6 +3,7 @@ package com.classMetabus.web.Admin.controller;
 import com.classMetabus.web.Admin.dto.common.CommonResponse;
 import com.classMetabus.web.Admin.dto.common.StatusCode;
 import com.classMetabus.web.Admin.dto.mail.SendMailRequest;
+import com.classMetabus.web.Admin.dto.message.SendMessageRequest;
 import com.classMetabus.web.Admin.service.MessageService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
