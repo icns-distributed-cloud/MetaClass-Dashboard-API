@@ -57,7 +57,7 @@ jobs:
         script: |
              docker rm -f $(docker ps -qa)
              docker rmi ${{ secrets.DOCKER_REPO }}
-             docker run -d -p 8088:8000 ${{ secrets.DOCKER_REPO }}
+             docker run -d -p 8088:8088 ${{ secrets.DOCKER_REPO }}
 #           echo "Login Start . . ."
 #           docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PW }}
 #
