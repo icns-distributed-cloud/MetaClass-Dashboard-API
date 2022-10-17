@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 public class MessageController {
     private final MessageService messageService;
 
-    @PostMapping("/send")
-    public ResponseEntity sendMessage(@RequestBody SendMessageRequest request){
-        return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "메세지를 전송했습니다.",messageService.sendMessage(request)),null, HttpStatus.OK);
-    }
+//    @PostMapping("/send")
+//    public ResponseEntity sendMessage(@RequestBody SendMessageRequest request){
+//        return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, "메세지를 전송했습니다.",messageService.sendMessage(request)),null, HttpStatus.OK);
+//    }
 
     /*
     //미사용

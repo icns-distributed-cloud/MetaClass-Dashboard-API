@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class SendMailRequest {
     private Integer instructorId;
     private String context;
+    private Integer studentId;
+    private Integer lectureId;
 }
