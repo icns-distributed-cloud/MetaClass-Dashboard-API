@@ -91,27 +91,32 @@ jobs:
 #       run: docker build -t $REPO:latest -t $REPO:${GITHUB_RUN_ID} .
 #     - name: Publish Docker Image
 #       run: docker push $REPO
-#     - name: SSH Remote Commands
-#       uses: appleboy/ssh-action@v0.1.4        
-#       with:
-#         host: ${{ secrets.HOST }}          
-#         username: ${{ secrets.USER }}
-#         password: ${{ secrets.PW }}
-#         port: ${{ secrets.PORT }}
-#         timeout: 40s  # 30초 기본        
-#         script: |
+     - name: SSH Remote Commands
+       uses: appleboy/ssh-action@v0.1.4
+       with:
+         host: ${{ secrets.HOST }}
+         username: ${{ secrets.USER }}
+         password: ${{ secrets.PW }}
+         port: ${{ secrets.PORT }}
+         timeout: 60s  # 30초 기본
+         script: |
 
 #           echo "Login Start . . ."
 #           docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PW }}
-
+#
 #           echo "Image Download . . ."
 #           docker pull ${{ secrets.DOCKER_ID }}/${{ secrets.NAME }}
 
 #           echo "Container Stop . . ."
-#           docker stop ${{ secrets.NAME }} 
-
+#           docker stop ${{ secrets.NAME }}
+#
 #           echo "Container Remove . . ."
 #           docker rm ${{ secrets.NAME }}
+           docker rm -f $(docker ps -qa)
+                   
+           echo "Images Remove . . ."
+           docker rmi ${{ secrets.DOCKER_REPO }}
 
-#           echo "Container Start . . ."
-#           docker run -d -p 8000:8000 --name ${{ secrets.NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.NAME }}
+           echo "Container Start . . ."
+#           docker run -d -p 8088:8000 --name ${{ secrets.NAME }} ${{ secrets.DOCKER_ID }}/${{ secrets.NAME }}
+           docker run -d -p 8088:8000 --name ${{ secrets.NAME }}

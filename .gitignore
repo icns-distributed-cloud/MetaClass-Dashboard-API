@@ -1,10 +1,10 @@
 HELP.md
-#target/classes
-#target/generated-sources
-#target/generated_test_sources
-#target/maven-archiver
-#target/maven-status
-#target/test-classes
+target/classes
+target/generated-sources
+target/generated_test_sources
+target/maven-archiver
+target/maven-status
+target/test-classes
 #!.mvn/wrapper/maven-wrapper.jar
 #!**/src/main/**/target/
 #!**/src/test/**/target/
