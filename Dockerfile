@@ -10,5 +10,5 @@ ADD build/Admin-0.0.1-SNAPSHOT.jar Admin-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8088
 
-ENTRYPOINT ["java", "-jar", "Admin-0.0.1-SNAPSHOT.jar"]
+#ENTRYPOINT ["java", "-jar", "Admin-0.0.1-SNAPSHOT.jar"]
 #CMD ["java", "-jar", "Admin-0.0.1-SNAPSHOT.jar"]
