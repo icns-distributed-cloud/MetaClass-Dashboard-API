@@ -90,6 +90,7 @@ public class UserDaoService {
             response.setEmail(stu.get().getEmail());
             response.setPhone(stu.get().getPhone());
             response.setDepartmentName(stu.get().getDepartment().getName());
+            response.setDepartmentId(stu.get().getDepartment().getId());
             response.setUserMode(1);
             response.setStatus(stu.get().getStatus());
             return response;
