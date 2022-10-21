@@ -83,6 +83,6 @@ public class ServerDaoService {
         if(servers.isEmpty()) servers.add(0);
         LocalDateTime localDateTime = LocalDateTime.now();
         //List<Lecture> s2 = lectureRepository.findByIdIsNotInAndInstructor_IdAndDeletedEqualsAndStartTimeIsAfter(servers,instructorId,false,localDateTime);
-        return lectureRepository.findByIdIsNotInAndInstructor_IdAndDeletedEqualsAndStartTimeIsAfter(servers,instructorId,false,localDateTime).stream().map(FindLectureInfoResponse::new).collect(Collectors.toList());
+        return lectureRepository.findByIdIsNotInAndInstructor_IdAndDeletedEqualsAndEndTimeIsAfter(servers,instructorId,false,localDateTime).stream().map(FindLectureInfoResponse::new).collect(Collectors.toList());
     }
 }
