@@ -55,7 +55,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PW }}
-          key: ${{ secrets.PRIVATE_KEY }}
+#          key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
                docker rm -f $(docker ps -qa)
