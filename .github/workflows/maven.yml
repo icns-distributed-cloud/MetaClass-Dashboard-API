@@ -50,7 +50,6 @@ jobs:
       run: docker push $REPO   
       
     - name: SSh Remote Commands Last
-      runs-on: ubuntu-latest
       uses: appleboy/ssh-action@v0.1.4
       with:
           host: ${{ secrets.HOST }}
