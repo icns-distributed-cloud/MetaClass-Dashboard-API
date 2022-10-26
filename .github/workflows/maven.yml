@@ -53,11 +53,11 @@ jobs:
     needs: docker
     steps:
     - name: checkout
-#       uses: appleboy/ssh-action@master
-      uses: actions/checkout@v1
+      uses: appleboy/ssh-action@master
+#       uses: actions/checkout@v1
       
-    - name: executing remote ssh commands
-      uses: ./
+#     - name: executing remote ssh commands
+#       uses: ./
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
