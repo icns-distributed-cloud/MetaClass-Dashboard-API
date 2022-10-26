@@ -1,4 +1,5 @@
-FROM openjdk:17-jdk
+# FROM openjdk:17-jdk
+FROM appleboy/drone-ssh:1.6.4-linux-amd64
 
 #ENV APP_HOME=/usr/app/
 #
