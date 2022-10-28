@@ -110,35 +110,71 @@ public class UserDaoService {
     }
     @Transactional
     public boolean updateById(UpdateRequest request){
-        Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
-        Optional<Student> stu = studentLoginRepository.findById(request.getId());
-        if(ins.isPresent() && ins.get().getDeleted() != true){
-            Instructor instructor = ins.get();
-            instructor.setName(request.getName());
-            instructor.setEmail(request.getEmail());
-            instructor.setPhone(request.getPhone());
-            instructor.setPassword(request.getPassword());
-            instructor.setStatus(request.getStatus());
+        if(request.getUserMode().equals(0)){ //instructor
+            Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
+            if(ins.isPresent() && ins.get().getDeleted() != true){
+                Instructor instructor = ins.get();
+                instructor.setName(request.getName());
+                instructor.setEmail(request.getEmail());
+                instructor.setPhone(request.getPhone());
+                instructor.setPassword(request.getPassword());
+                instructor.setStatus(request.getStatus());
 
-            instructorLoginRepository.save(instructor);
-            return true;
+                instructorLoginRepository.save(instructor);
+                return true;
+            }
         }
-        else if(stu.isPresent() && stu.get().getDeleted() != true){
-            Department department = Department.builder().id(request.getDepartmentId()).build();
-            Student student = stu.get();
-            student.setName(request.getName());
-            student.setEmail(request.getEmail());
-            student.setPhone(request.getPhone());
-            student.setPassword(request.getPassword());
-            student.setDepartment(department);
-            student.setStatus(request.getStatus());
+        else if(request.getUserMode().equals(1)){ // student
+            Optional<Student> stu = studentLoginRepository.findById(request.getId());
+            if(stu.isPresent() && stu.get().getDeleted() != true){
+                Department department = Department.builder().id(request.getDepartmentId()).build();
+                Student student = stu.get();
+                student.setName(request.getName());
+                student.setEmail(request.getEmail());
+                student.setPhone(request.getPhone());
+                student.setPassword(request.getPassword());
+                student.setDepartment(department);
+                if(request.getStatus().equals(null)){
+                    student.setStatus(stu.get().getStatus());
+                }else{student.setStatus(request.getStatus());}
 
-            studentLoginRepository.save(student);
-            return true;
+                studentLoginRepository.save(student);
+                return true;
+            }
         }
-        else{
-            return false;
-        }
+        return false;
+
+//        Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
+//        Optional<Student> stu = studentLoginRepository.findById(request.getId());
+//        if(ins.isPresent() && ins.get().getDeleted() != true){
+//            Instructor instructor = ins.get();
+//            instructor.setName(request.getName());
+//            instructor.setEmail(request.getEmail());
+//            instructor.setPhone(request.getPhone());
+//            instructor.setPassword(request.getPassword());
+//            instructor.setStatus(request.getStatus());
+//
+//            instructorLoginRepository.save(instructor);
+//            return true;
+//        }
+//        else if(stu.isPresent() && stu.get().getDeleted() != true){
+//            Department department = Department.builder().id(request.getDepartmentId()).build();
+//            Student student = stu.get();
+//            student.setName(request.getName());
+//            student.setEmail(request.getEmail());
+//            student.setPhone(request.getPhone());
+//            student.setPassword(request.getPassword());
+//            student.setDepartment(department);
+//            if(request.getStatus().equals(null)){
+//                student.setStatus(stu.get().getStatus());
+//            }else{student.setStatus(request.getStatus());}
+//
+//            studentLoginRepository.save(student);
+//            return true;
+//        }
+//        else{
+//            return false;
+//        }
     }
     @Transactional
     public boolean deleteById(DeleteRequest deleteRequest){

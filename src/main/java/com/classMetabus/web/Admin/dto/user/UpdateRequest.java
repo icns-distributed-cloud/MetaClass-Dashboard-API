@@ -15,4 +15,5 @@ public class UpdateRequest {
     private String email;
     private Integer departmentId;
     private Integer status;
+    private Integer userMode;
 }
