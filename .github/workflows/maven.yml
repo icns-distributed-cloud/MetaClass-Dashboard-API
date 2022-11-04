@@ -66,7 +66,7 @@ jobs:
              echo "test!"
              docker rm -f $(docker ps -qa)
              docker rmi ${{ secrets.DOCKER_REPO }}
-             docker run -d --name metaclass_dashboard/API -p 8088:8088 ${{ secrets.DOCKER_REPO }} 
+             docker run -d --name metaclass_dashboard_API -p 8088:8088 ${{ secrets.DOCKER_REPO }} 
 
 
    
