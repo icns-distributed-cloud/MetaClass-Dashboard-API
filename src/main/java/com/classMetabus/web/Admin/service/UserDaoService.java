@@ -223,7 +223,7 @@ public class UserDaoService {
     }
     @Transactional
     public boolean changePassword (ChangePasswordRequest request) {
-        if (request.getUserMode().equals(0)) { //instructor
+        if (request.getUserMode().equals(0) && !request.getPassword().trim().isEmpty()) { //instructor
             Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
 
             Instructor instructor = ins.get();
@@ -231,7 +231,8 @@ public class UserDaoService {
             instructor.setStatus(1);
             instructorLoginRepository.save(instructor);
 
-        } else if (request.getUserMode().equals(1)) { //student
+        }
+        else if (request.getUserMode().equals(1) && !request.getPassword().trim().isEmpty()) { //student
             Optional<Student> stu = studentLoginRepository.findById(request.getId());
 
             Student student = stu.get();

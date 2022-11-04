@@ -89,6 +89,7 @@ public class UserController {
     public ResponseEntity changePassword (@RequestBody ChangePasswordRequest request){
         Boolean result = userDaoService.changePassword(request);
         String message =  "존재하지 않은 아이디입니다.";
+        if(request.getPassword().trim().isEmpty()){message =  "입력되지않은 비밀번호입니다.";}
         if (result == true) message = "비밀번호 변경을 성공했습니다.";
         return  new ResponseEntity(CommonResponse.res(result,StatusCode.OK,message,null),null,HttpStatus.OK);
     }
