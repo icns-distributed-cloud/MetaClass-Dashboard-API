@@ -59,11 +59,10 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
         password: ${{ secrets.PW }}
- #       key: ${{ secrets.PRIVATE_KEY }}
+
         port: ${{ secrets.PORT }}
         timeout: 40s
-        script: |
-                  
+        script: |   
              docker rm -f ${{ secrets.CONTAINER_NAME }}
              docker rmi ${{ secrets.DOCKER_REPO }}
              docker run -d --name ${{ secrets.CONTAINER_NAME }} -p 8088:8088 ${{ secrets.DOCKER_REPO }} 
