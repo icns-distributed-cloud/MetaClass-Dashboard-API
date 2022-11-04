@@ -63,10 +63,10 @@ jobs:
         port: ${{ secrets.PORT }}
         timeout: 40s
         script: |
-             echo "test!"
-             docker rm -f $(docker ps -qa)
+                  
+             docker rm -f ${{ secrets.CONTAINER_NAME }}
              docker rmi ${{ secrets.DOCKER_REPO }}
-             docker run -d --name metaclass_dashboard_API -p 8088:8088 ${{ secrets.DOCKER_REPO }} 
+             docker run -d --name ${{ secrets.CONTAINER_NAME }} -p 8088:8088 ${{ secrets.DOCKER_REPO }} 
 
 
    
