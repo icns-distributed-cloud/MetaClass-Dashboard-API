@@ -38,6 +38,7 @@ public class UserDaoService {
                     .email(request.getEmail())
                     .password(request.getPassword())
                     .phone(request.getPhone().replace("-","").replace(".",""))
+                    .status(0)
                     .build();
             instructorLoginRepository.save(instructor);
             return true;
@@ -57,6 +58,7 @@ public class UserDaoService {
                     .password(request.getPassword())
                     .phone(request.getPhone())
                     .password(request.getPassword())
+                    .status(0)
                     .department(department)
                     .build();
 
