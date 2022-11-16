@@ -21,8 +21,10 @@ public class ServerController {
 
     @PostMapping("/post/createserver")
     public ResponseEntity create(@RequestBody CreateServerIPRequest request){
-        String message = "서버 내 강의실 등록을 성공했습니다.";
-        return new ResponseEntity(CommonResponse.res(serverDaoService.create(request), StatusCode.OK, message,null),null, HttpStatus.CREATED);
+        Boolean result = serverDaoService.create(request);
+        String message = "서버 내 강의실 등록을 실패했습니다.";
+        if (result == true) message =  "서버 내 강의실 등록을 성공했습니다.";
+        return new ResponseEntity(CommonResponse.res(result, StatusCode.OK, message,null),null, HttpStatus.CREATED);
     }
 
     @PostMapping("/post/listserver")

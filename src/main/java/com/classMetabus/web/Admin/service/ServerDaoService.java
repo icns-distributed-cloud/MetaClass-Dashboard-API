@@ -30,7 +30,7 @@ public class ServerDaoService {
     @Transactional
     public boolean create(CreateServerIPRequest request){
         serverRepository.findByLectureIdAndLecture_DeletedEquals(request.getLectureId(),false).ifPresent(m->{
-            String message = "서버 아이피 등록을 실패했습니다.";
+            String message = "서버 내 강의실 등록을 실패했습니다.";
             throw new DuplicateException(message);
         });
 
