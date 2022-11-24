@@ -44,6 +44,10 @@ public class Lecture {
     @ColumnDefault(value = "0")
     private Boolean deleted;
 
+    @Column
+    @ColumnDefault(value = "0")
+    private Boolean isAutoClass;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "content_id")
     private Content content;

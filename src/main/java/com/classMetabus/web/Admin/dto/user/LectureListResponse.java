@@ -32,6 +32,7 @@ public class LectureListResponse {
     private String mapName;
     private Integer quizId;
     private String quizName;
+    private Boolean isAutoClass;
     private List<Students> students;
 }
 

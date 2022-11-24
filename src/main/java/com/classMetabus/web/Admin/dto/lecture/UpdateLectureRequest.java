@@ -15,6 +15,7 @@ public class UpdateLectureRequest {
     private Integer id;
     private String name;
     private Integer instructorId;
+    private Boolean isAutoClass;
     private Integer mapId;
     private Integer contentId;
     private Integer quizId;

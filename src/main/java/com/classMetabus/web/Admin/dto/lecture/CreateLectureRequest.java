@@ -15,6 +15,7 @@ import java.util.List;
 public class CreateLectureRequest {
     private String name;
     private Integer instructorId;
+    private Boolean isAutoClass;
     private Integer mapId;
     private Integer contentId;
     private Integer quizId;

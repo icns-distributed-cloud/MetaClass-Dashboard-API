@@ -38,4 +38,5 @@ public class StudentLectureListResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime absentTime;
     private Boolean lateYN;
+    private Boolean isAutoClass;
 }

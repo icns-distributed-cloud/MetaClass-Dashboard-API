@@ -42,6 +42,7 @@ public class LectureDaoService {
                 .startTime(request.getStartTime())
                 .endTime(request.getEndTime())
                 .deleted(false)
+                .isAutoClass(request.getIsAutoClass())
                 .map(map)
                 .instructor(instructor)
                 .build();
@@ -104,6 +105,7 @@ public class LectureDaoService {
                 .build();
 
         Lecture updatedInfo = info4masterId.get();
+        updatedInfo.setIsAutoClass(request.getIsAutoClass());
         updatedInfo.setName(request.getName());
         updatedInfo.setInstructor(instructor);
         updatedInfo.setStartTime(request.getStartTime());
@@ -169,6 +171,7 @@ public class LectureDaoService {
             response.setMapName(lectures.get(i).getMapName());
             response.setQuizId(lectures.get(i).getQuizId());
             response.setQuizName(lectures.get(i).getQuizName());
+            response.setIsAutoClass(lectures.get(i).getIsAutoClass());
             //response.setCountUser(lectures.get(i).getCountUser());
 
             int j = 0;
@@ -270,6 +273,7 @@ public class LectureDaoService {
             response.setParticipationLevel(lectures.get(i).getParticipationLevel());
             response.setAbsentTime(lectures.get(i).getAbsentTime());
             response.setLateYN(Objects.isNull(lectures.get(i).getAbsentTime()));
+            response.setIsAutoClass(lectures.get(i).getIsAutoClass());
 
             if(cnts.isEmpty()){
                 response.setCountUser(0);
@@ -318,6 +322,7 @@ public class LectureDaoService {
             response.setMapType(lectures.get(i).getMapType());
             response.setMapName(lectures.get(i).getMapName());
             response.setCountUser(lectures.get(i).getCountUser());
+            response.setIsAutoClass(lectures.get(i).getIsAutoClass());
 
             int j = 0;
             for(countOfStudentProjectionInterface count: cnts){

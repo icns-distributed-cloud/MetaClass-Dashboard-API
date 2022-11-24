@@ -23,4 +23,5 @@ public interface InstructorIdcntProjectionInterface {
     Integer getQuizScore();
     Integer getParticipationLevel();
     LocalDateTime getAbsentTime();
+    Boolean getIsAutoClass();
 }
