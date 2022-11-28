@@ -21,6 +21,7 @@ public class UserController {
         String message = "회원가입을 성공했습니다.";
         return new ResponseEntity(CommonResponse.res(userDaoService.register(request), StatusCode.OK, message,null),null, HttpStatus.CREATED);
     }
+
     @PostMapping("/post/login")
     public ApiResponse login(@RequestBody LoginRequest request){
         LoginResponse response = userDaoService.findOne(request);
@@ -42,6 +43,7 @@ public class UserController {
         }
         return apiResponse;
     }
+
     @GetMapping("get/allstudent")
     public ResponseEntity allStudentList(){
         String message = "학생 회원정보 조회를 성공했습니다.";
@@ -85,6 +87,7 @@ public class UserController {
         if (result == true) message =  "사용할 수 있는 아이디입니다.";
         return new ResponseEntity(CommonResponse.res(result, StatusCode.OK, message,null),null, HttpStatus.OK);
     }
+
     @PostMapping("post/changePassword")
     public ResponseEntity changePassword (@RequestBody ChangePasswordRequest request){
         Boolean result = userDaoService.changePassword(request);

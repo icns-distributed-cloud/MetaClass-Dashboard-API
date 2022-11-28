@@ -24,7 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/content")
 @AllArgsConstructor
-@Api(tags = {"콘텐츠 생성/삭제/리스트"})
+@Api(tags = {"콘텐츠 생성/삭제/수정/리스트"})
 public class ContentsController {
     private final ContentsDaoService contentsDaoService;
     @Autowired
@@ -58,6 +58,7 @@ public class ContentsController {
         String message = "리스트를 성공적으로 가져왔습니다.";
         return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, message,contentsDaoService.contentList(request)),null, HttpStatus.OK);
     }
+
     @PostMapping("/post/updateidbycontentid")
     public ResponseEntity updateIdByContentId(@RequestBody UpdateIdByContentIdRequest request){
         Boolean result = contentsDaoService.updateIdByContentId(request);

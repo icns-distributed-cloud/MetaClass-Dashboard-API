@@ -23,6 +23,7 @@ public class AllStudentListResponse {
     private LocalDateTime joinDate;
     private String departmentName;
 
+    private Integer status;
     public AllStudentListResponse(Student student) {
         this.id = student.getId();
         this.loginId = student.getLoginId();
@@ -30,5 +31,6 @@ public class AllStudentListResponse {
         this.name = student.getName();
         this.joinDate = student.getJoinDate();
         this.departmentName = student.getDepartment().getName();
+        this.status = student.getStatus();
     }
 }

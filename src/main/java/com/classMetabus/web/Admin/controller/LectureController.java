@@ -20,13 +20,16 @@ public class LectureController {
 
     @PostMapping("/instructor/post/createlecture")
     public ResponseEntity createLecture(@RequestBody CreateLectureRequest request){
-        Boolean result = lectureDaoService.create(request);
+        Integer result = lectureDaoService.create(request);
         String message = "강좌 생성을 실패했습니다.";
-        if(result == true){
-            message = "강좌 생성을 성공했습니다.";
-            return new ResponseEntity(CommonResponse.res(result, StatusCode.OK, message,null),null, HttpStatus.CREATED);
+        if(result == 2){
+            message = "이미 존재하는 강좌 명입니다.";
         }
-        else return new ResponseEntity(CommonResponse.res(result, StatusCode.OK, message,null),null, HttpStatus.CREATED);
+        else if(result == 1){
+            message = "강좌 생성을 성공했습니다.";
+            return new ResponseEntity(CommonResponse.res(true, StatusCode.OK, message,null),null, HttpStatus.CREATED);
+        }
+        return new ResponseEntity(CommonResponse.res(false, StatusCode.OK, message,null),null, HttpStatus.CREATED);
     }
 
     @PatchMapping("/instructor/patch/updatelecture")

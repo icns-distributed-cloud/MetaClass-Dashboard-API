@@ -26,13 +26,15 @@ public class LectureDaoService {
     private final StudentListRepository studentListRepository;
     private final AbsentClassInfoRepository absentClassInfoRepository;
     @Transactional
-    public boolean create(CreateLectureRequest request){
+    public Integer create(CreateLectureRequest request){
         Optional<Lecture> ops = lectureRepository.findByName(request.getName());
         Optional<Instructor> check4instructorId = instructorLoginRepository.findById(request.getInstructorId());
         Optional<Map> check4mapId = mapRepository.findById(request.getMapId());
-        if(ops.isPresent() || check4instructorId.isEmpty() || check4mapId.isEmpty()){
-            return false;
+        if(ops.isPresent()){return 2;}
+        if(check4instructorId.isEmpty() || check4mapId.isEmpty()){
+            return 0;
         }
+
         Instructor instructor = Instructor.builder().id(request.getInstructorId()).build();
 
         Map map = Map.builder().id(request.getMapId()).build();
@@ -83,7 +85,7 @@ public class LectureDaoService {
         }
         // 저장
         studentListRepository.saveAll(lists);
-        return true;
+        return 1;
     }
     @Transactional
     public boolean updateByclassRoomName(UpdateLectureRequest request){
