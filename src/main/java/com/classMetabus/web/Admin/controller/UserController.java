@@ -96,4 +96,13 @@ public class UserController {
         if (result == true) message = "비밀번호 변경을 성공했습니다.";
         return  new ResponseEntity(CommonResponse.res(result,StatusCode.OK,message,null),null,HttpStatus.OK);
     }
+
+    @PatchMapping("patch/updateuserstatus")
+    public ResponseEntity updateStatusById(@RequestBody UpdateStatusRequest request){
+        Boolean result = userDaoService.updateStatusById(request);
+        String message =  "없는 계정이거나 이미 삭제된 계정입니다.";
+        if (result == true) message =  "회원상태 수정을 성공했습니다.";
+
+        return new ResponseEntity(CommonResponse.res(result, StatusCode.OK, message,null),null, HttpStatus.OK);
+    }
 }

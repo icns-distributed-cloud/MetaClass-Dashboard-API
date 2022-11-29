@@ -120,7 +120,6 @@ public class UserDaoService {
                 instructor.setEmail(request.getEmail());
                 instructor.setPhone(request.getPhone());
                 instructor.setPassword(request.getPassword());
-                instructor.setStatus(request.getStatus());
 
                 instructorLoginRepository.save(instructor);
                 return true;
@@ -136,47 +135,12 @@ public class UserDaoService {
                 student.setPhone(request.getPhone());
                 student.setPassword(request.getPassword());
                 student.setDepartment(department);
-                if(request.getStatus().equals(null)){
-                    student.setStatus(stu.get().getStatus());
-                }else{student.setStatus(request.getStatus());}
 
                 studentLoginRepository.save(student);
                 return true;
             }
         }
         return false;
-
-//        Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
-//        Optional<Student> stu = studentLoginRepository.findById(request.getId());
-//        if(ins.isPresent() && ins.get().getDeleted() != true){
-//            Instructor instructor = ins.get();
-//            instructor.setName(request.getName());
-//            instructor.setEmail(request.getEmail());
-//            instructor.setPhone(request.getPhone());
-//            instructor.setPassword(request.getPassword());
-//            instructor.setStatus(request.getStatus());
-//
-//            instructorLoginRepository.save(instructor);
-//            return true;
-//        }
-//        else if(stu.isPresent() && stu.get().getDeleted() != true){
-//            Department department = Department.builder().id(request.getDepartmentId()).build();
-//            Student student = stu.get();
-//            student.setName(request.getName());
-//            student.setEmail(request.getEmail());
-//            student.setPhone(request.getPhone());
-//            student.setPassword(request.getPassword());
-//            student.setDepartment(department);
-//            if(request.getStatus().equals(null)){
-//                student.setStatus(stu.get().getStatus());
-//            }else{student.setStatus(request.getStatus());}
-//
-//            studentLoginRepository.save(student);
-//            return true;
-//        }
-//        else{
-//            return false;
-//        }
     }
     @Transactional
     public boolean deleteById(DeleteRequest deleteRequest){
@@ -212,7 +176,6 @@ public class UserDaoService {
     public List<StudentListByDepartmentResponse> studentListByDepartment(StudentListByDepartmentRequest request){
         return studentLoginRepository.findByDepartmentIdAndDeletedEqualsOrderByJoinDate(request.getDepartmentId(),false).stream().map(StudentListByDepartmentResponse::new).collect(Collectors.toList());
     }
-    //checkLoginId
     @Transactional
     public boolean checkLoginId (checkLoginIdRequest request){
         if(instructorLoginRepository.findByLoginId(request.getLoginId()).isPresent()){
@@ -245,6 +208,30 @@ public class UserDaoService {
         else {return false;}
 
         return true;
+    }
+    @Transactional
+    public boolean updateStatusById(UpdateStatusRequest request){
+        if(request.getUserMode().equals(0)){ //instructor
+            Optional<Instructor> ins = instructorLoginRepository.findById(request.getId());
+            if(ins.isPresent() && ins.get().getDeleted() != true){
+                Instructor instructor = ins.get();
+                instructor.setStatus(request.getStatus());
+
+                instructorLoginRepository.save(instructor);
+                return true;
+            }
+        }
+        else if(request.getUserMode().equals(1)){ // student
+            Optional<Student> stu = studentLoginRepository.findById(request.getId());
+            if(stu.isPresent() && stu.get().getDeleted() != true){
+                Student student = stu.get();
+                student.setStatus(request.getStatus());
+
+                studentLoginRepository.save(student);
+                return true;
+            }
+        }
+        return false;
     }
 }
 
