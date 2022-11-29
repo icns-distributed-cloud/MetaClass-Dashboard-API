@@ -13,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("api/certificate")
 @AllArgsConstructor
@@ -42,8 +40,8 @@ class CertificateController {
     @PatchMapping("/patch/deletecertificate")
     public ResponseEntity deleteById(@RequestBody DeleteCertificateRequest request){
         Boolean result = certificateDaoService.deleteById(request);
-        String message =  "이미 사용중인 콘텐츠입니다.";
-        if (result == true) message =  "콘텐츠 삭제를 성공했습니다.";
+        String message =  "이미 등록된 수료증 양식입니다.";
+        if (result == true) message =  "수료증 양식 삭제를 성공했습니다.";
 
         return new ResponseEntity(CommonResponse.res(result, StatusCode.OK, message,null),null, HttpStatus.OK);
     }
@@ -55,13 +53,11 @@ class CertificateController {
     }
     //create 호출 후 해당 API 반드시 호출
     @PostMapping("/post/getcertificateinfobyid")
-    public ResponseEntity getCertificateInfoById(@RequestBody GetCertificateInfoByIdRequest request){
-        Optional<CertificateListResponse> result = certificateDaoService.getCertificateInfoById(request);
-        String message = "존재하지 않는 콘텐츠 아이디입니다.";
-        if (result.isPresent()) {
-            message =  "강사id 업데이트를 성공했습니다.";
-            return new ResponseEntity(CommonResponse.res(true,StatusCode.OK, message,result),null, HttpStatus.OK);
-        }
-        else return new ResponseEntity(CommonResponse.res(false,StatusCode.OK, message,result),null, HttpStatus.OK);
+    public ResponseEntity getCertificateInfoById(@RequestBody UpdateCetificateByIdRequest request){
+        Boolean result = certificateDaoService.updateInstuructorIdByCertificateId(request);
+        String message =  "수료증 양식 업데이트를 실패했습니다.";
+        if (result == true) message =  "수료증 양식 업데이트를 성공했습니다.";
+
+        return new ResponseEntity(CommonResponse.res(result, StatusCode.OK, message,null),null, HttpStatus.OK);
     }
 }

@@ -65,7 +65,18 @@ public class CertificateDaoService {
         return certificateRepository.findByInstructor_IdAndDeletedEquals(request.getInstructorId(),false).stream().map(CertificateListResponse::new).collect(Collectors.toList());
     }
     @Transactional
-    public Optional<CertificateListResponse> getCertificateInfoById(GetCertificateInfoByIdRequest request) {
-        return certificateRepository.findById(request.getId()).map(CertificateListResponse::new);
+    public Boolean updateInstuructorIdByCertificateId(UpdateCetificateByIdRequest request){
+        Optional<Certificate> ops = certificateRepository.findById(request.getCertificateId());
+        if(ops.isEmpty() || request.getCertificateName().equals(""))
+            return false;
+
+        Certificate updatedCertificate = ops.get();
+        Instructor instructor = new Instructor();
+        instructor.setId(request.getInstructorId());
+        updatedCertificate.setInstructor(instructor);
+        updatedCertificate.setName(request.getCertificateName());
+
+        certificateRepository.save(updatedCertificate);
+        return true;
     }
 }
