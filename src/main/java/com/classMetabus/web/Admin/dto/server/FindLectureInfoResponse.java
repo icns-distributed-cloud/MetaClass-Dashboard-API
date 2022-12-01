@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class FindLectureInfoResponse {
-    private Integer lecturId;
+    private Integer lectureId;
     private String lectureName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime lectureStartTime;
@@ -23,7 +23,7 @@ public class FindLectureInfoResponse {
     private LocalDateTime lectureEndTime;
 
     public FindLectureInfoResponse(Lecture lecture) {
-        this.lecturId = lecture.getId();
+        this.lectureId = lecture.getId();
         this.lectureName = lecture.getName();
         this.lectureStartTime = lecture.getStartTime();
         this.lectureEndTime = lecture.getEndTime();

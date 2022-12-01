@@ -28,14 +28,14 @@ public class CertificateDaoService {
         CreateCertificateResponse response = new CreateCertificateResponse();
         if(opt.isPresent())
             return response;
-        Instructor instructor = new Instructor();
-        instructor.setId(1);
+        //Instructor instructor = new Instructor();
+        //instructor.setId(1); //임시
 
         Certificate certificate = Certificate.builder()
                 .name(file.getOriginalFilename())
                 .deleted(false)
                 .directory(directory.replace(uploadDir,""))
-                .instructor(instructor)
+                //.instructor(instructor)
                 .build();
         certificateRepository.save(certificate);
 
