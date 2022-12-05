@@ -80,7 +80,7 @@ public class ServerDaoService {
     public List<FindLectureInfoResponse> findLectureInfo(Integer instructorId){
         List<Integer> servers = serverRepository.findByDistinctServerList();
         //servers 값이 null 인경우, JPA IsNotIN이 적용되지않음
-        if(servers.isEmpty()) servers.add(0);
+        if(servers.isEmpty()) servers.add(0); 
         LocalDateTime localDateTime = LocalDateTime.now();
         //List<Lecture> s2 = lectureRepository.findByIdIsNotInAndInstructor_IdAndDeletedEqualsAndStartTimeIsAfter(servers,instructorId,false,localDateTime);
         return lectureRepository.findByIdIsNotInAndInstructor_IdAndDeletedEqualsAndEndTimeIsAfter(servers,instructorId,false,localDateTime).stream().map(FindLectureInfoResponse::new).collect(Collectors.toList());
